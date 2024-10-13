@@ -62,7 +62,7 @@ fi
 #========                                 MENU SYSTEM                                    ========#
 #=================================================================================================
 
-options=("Check vsftpd" "Start vsftpd" "Restart vsftpd" "Stop vsftpd" "Quit")
+options=("Check vsftpd" "Start vsftpd" "Restart vsftpd" "Stop vsftpd" "Start as Service" "Stop as Service" "Monitor Log File" "Quit")
 PS3='Choose which VSFTPD option you like:  '
 
 while [ "$menu" != 1 ]; do
@@ -110,6 +110,35 @@ select opt in "${options[@]}" ; do
 			echo "Stopping VSFTPD Server..."
 			sleep 3
 			service vsftpd stop
+			sleep 3
+		break
+		;;
+		"Start as Service")
+			clear
+			Splash
+			echo " "
+			echo "Starting VSFTPD Service..."
+			sleep 3
+			systemctl enable vsftpd
+			sleep 3
+		break
+		;;
+		"Stop as Service")
+			clear
+			Splash
+			echo " "
+			echo "Stopping VSFTPD Service..."
+			sleep 3
+			service disable vsftpd
+			sleep 3
+		break
+		;;
+		"Monitor Log File")
+			clear
+			Splash
+			echo " "
+			echo -e "\e[31mStarting log file monitor, CTRL+C and close window to end.\e[0m"
+			xterm -hold -T "FTP Server Monitor" -e tail -f /var/log/vsftpd.log
 			sleep 3
 		break
 		;;
